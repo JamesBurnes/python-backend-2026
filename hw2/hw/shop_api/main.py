@@ -1,3 +1,4 @@
+from prometheus_fastapi_instrumentator import Instrumentator
 from http import HTTPStatus
 from typing import Any, Optional
 from itertools import count
@@ -205,3 +206,5 @@ async def websocket_endpoint(websocket: WebSocket, chat_name: str):
         active_connections[chat_name].remove(websocket)
         if not active_connections[chat_name]:
             del active_connections[chat_name]
+
+Instrumentator().instrument(app).expose(app)
