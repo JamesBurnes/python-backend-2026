@@ -3,9 +3,9 @@ from http import HTTPStatus
 from typing import Any, Optional
 from fastapi import FastAPI, HTTPException, Query, Path, Depends, Response, WebSocket, WebSocketDisconnect
 from pydantic import BaseModel, Field, ConfigDict
-from database import engine, get_db, Base
+from shop_api.database import engine, get_db, Base
 from sqlalchemy.orm import Session
-import models
+from shop_api import models
 import uuid
 
 app = FastAPI(title="Shop API")
