@@ -2,6 +2,20 @@ version: "3"
 
 services:
 
+  db:
+    image: postgres:15
+    container_name: hw4_postgres
+    environment:
+      POSTGRES_DB: hw4_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "7432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+
   local:
     build:
       context: .
@@ -10,6 +24,10 @@ services:
     restart: always
     ports:
       - 8080:8080
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/hw4_db
+    depends_on:
+        - db
     networks:
       - monitoring
 
@@ -39,3 +57,6 @@ services:
 networks:
   monitoring:
     driver: bridge
+
+volumes:
+  postgres_data:
